@@ -1,3 +1,8 @@
+project.ext.react = [
+    entryFile: "index.js",
+    enableHermes: false,  // ADD THIS LINE
+]
+
 apply plugin: "com.android.application"
 apply plugin: "com.facebook.react"
 
@@ -167,4 +172,23 @@ dependencies {
     }
 }
 
+allprojects {
+    repositories {
+        mavenLocal()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url("$rootDir/../node_modules/react-native/android")
+        }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
+        maven {
+            // react-native-background-fetch
+            url("${project(':react-native-background-fetch').projectDir}/libs")
+       }
+    }
+}
+
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
